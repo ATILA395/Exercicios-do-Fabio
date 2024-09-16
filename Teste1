@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saudação ao Visitante</title>
+</head>
+<body>
+    <div id="saudacao"></div>
+
+    <script type="text/javascript">
+        function cumprimentar(nome) {
+            var d = new Date();
+            var hora = d.getHours();
+            var saudacao;
+
+            // Determina a saudação com base na hora do dia
+            if (hora < 12) {
+                saudacao = "Bom dia";
+            } else if (hora < 18) {
+                saudacao = "Boa tarde";
+            } else {
+                saudacao = "Boa noite";
+            }
+
+            // Cria a mensagem completa
+            var mensagem = saudacao + ". Seja bem-vindo senhor(a) " + nome + "<br>A data e hora atuais s&atilde;o: " + d.toLocaleString();
+
+            // Atualiza o conteúdo do elemento 'saudacao'
+            document.getElementById('saudacao').innerHTML = mensagem;
+        }
+
+        cumprimentar('visitante'); // Chama a função para executar com o nome 'visitante'
+    </script>
+</body>
+</html>
