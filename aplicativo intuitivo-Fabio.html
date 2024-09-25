@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicativo Multifuncional</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f0f0;
+        }
+        nav {
+            margin-bottom: 20px;
+            background-color: #007bff;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        nav button {
+            color: white;
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-right: 15px;
+            font-size: 16px;
+        }
+        nav button:hover {
+            text-decoration: underline;
+        }
+        .section {
+            display: none; /* Oculta as seções inicialmente */
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        input {
+            margin-bottom: 10px;
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        h2 {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Aplicativo Multifuncional</h1>
+
+<nav>
+    <button onclick="mostrarSeccao('verificadorIdade')">Verificador de Idade</button>
+    <button onclick="mostrarSeccao('acessoLogin')">Acesso Login</button>
+    <button onclick="mostrarSeccao('calculadoraIMC')">Calculadora de IMC</button>
+</nav>
+
+<div class="section" id="verificadorIdade">
+    <h2>Verificador de Idade</h2>
+    <input type="number" id="idade" placeholder="Digite sua idade">
+    <button onclick="verificarIdade()">Verificar</button>
+    <p id="mensagemIdade"></p>
+</div>
+
+<div class="section" id="acessoLogin">
+    <h2>Acesso Login</h2>
+    <input type="text" id="usuario" placeholder="Usuário">
+    <input type="password" id="senha" placeholder="Senha">
+    <button onclick="fazerLogin()">Login</button>
+    <p id="resultadoLogin"></p>
+</div>
+
+<div class="section" id="calculadoraIMC">
+    <h2>Calculadora de IMC</h2>
+    <input type="number" id="peso" placeholder="Peso (kg)">
+    <input type="number" id="altura" placeholder="Altura (m)">
+    <button onclick="calcularIMC()">Calcular IMC</button>
+    <p id="resultadoIMC"></p>
+</div>
+
+<script>
+    // Função para mostrar a seção selecionada
+    function mostrarSeccao(seccao) {
+        const secoes = document.querySelectorAll('.section');
+        secoes.forEach(s => s.style.display = 'none'); // Oculta todas as seções
+        document.getElementById(seccao).style.display = 'block'; // Mostra a seção selecionada
+    }
+
+    // Verificador de Idade
+    function verificarIdade() {
+        const idade = parseInt(document.getElementById('idade').value);
+        const mensagem = idade >= 18 ? 'Você é maior de idade.' : 'Você é menor de idade.';
+        document.getElementById('mensagemIdade').innerText = mensagem;
+    }
+
+    // Acesso Login
+    function fazerLogin() {
+        const usuario = document.getElementById('usuario').value;
+        const senha = document.getElementById('senha').value;
+        const usuarioCorreto = 'admin';
+        const senhaCorreta = 'senha123';
+
+        const mensagem = (usuario === usuarioCorreto && senha === senhaCorreta) 
+            ? 'Login bem-sucedido!' 
+            : 'Usuário ou senha incorretos.';
+        document.getElementById('resultadoLogin').innerText = mensagem;
+    }
+
+    // Calculadora de IMC
+    function calcularIMC() {
+        const peso = parseFloat(document.getElementById('peso').value);
+        const altura = parseFloat(document.getElementById('altura').value);
+        const imc = peso / (altura * altura);
+        let classificacao;
+
+        if (imc < 18.5) {
+            classificacao = 'Abaixo do peso';
+        } else if (imc < 24.9) {
+            classificacao = 'Peso normal';
+        } else if (imc < 29.9) {
+            classificacao = 'Sobrepeso';
+        } else {
+            classificacao = 'Obesidade';
+        }
+
+        document.getElementById('resultadoIMC').innerText = `Seu IMC é: ${imc.toFixed(2)} - ${classificacao}`;
+    }
+
+    // Exibe a seção inicial ao carregar
+    mostrarSeccao('verificadorIdade');
+</script>
+
+</body>
+</html>
