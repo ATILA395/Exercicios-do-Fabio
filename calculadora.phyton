@@ -1,0 +1,22 @@
+def calcular(operacao, numero):
+    if operacao == 'soma':
+        return 5 + numero
+    elif operacao == 'subtracao':
+        return 5 - numero
+    elif operacao == 'multiplicacao':
+        return 5 * numero
+    elif operacao == 'divisao':
+        return 5 / numero if numero != 0 else 'Indefinido'
+    else:
+        return 'Operação inválida'
+
+def main():
+    print("Calculadora com o número 5")
+    operacao = input("Escolha a operação (soma, subtracao, multiplicacao, divisao): ").strip().lower()
+    numero = float(input("Insira o número: "))
+    
+    resultado = calcular(operacao, numero)
+    print(f"O resultado da operação é: {resultado}")
+
+if __name__ == "__main__":
+    main()
