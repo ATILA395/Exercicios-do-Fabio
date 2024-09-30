@@ -1,0 +1,102 @@
+def verificar_idade():
+    idade = int(input("Digite sua idade: "))
+    if idade >= 18:
+        print("Você é maior de idade.")
+    else:
+        print("Você é menor de idade.")
+
+def fazer_login():
+    usuario_correto = 'admin'
+    senha_correta = 'senha123'
+    
+    usuario = input("Usuário: ")
+    senha = input("Senha: ")
+    
+    if usuario == usuario_correto and senha == senha_correta:
+        print("Login bem-sucedido!")
+    else:
+        print("Usuário ou senha incorretos.")
+
+def calcular_imc():
+    peso = float(input("Digite seu peso (kg): "))
+    altura = float(input("Digite sua altura (m): "))
+    imc = peso / (altura ** 2)
+    
+    if imc < 18.5:
+        classificacao = 'Abaixo do peso'
+    elif imc < 24.9:
+        classificacao = 'Peso normal'
+    elif imc < 29.9:
+        classificacao = 'Sobrepeso'
+    else:
+        classificacao = 'Obesidade'
+    
+    print(f"Seu IMC é: {imc:.2f} - {classificacao}")
+
+def calcular_operacoes_matematicas():
+    print("\nOperações Matemáticas:")
+    num1 = float(input("Digite o primeiro número: "))
+    num2 = float(input("Digite o segundo número: "))
+    
+    print("Escolha a operação:")
+    print("1. Adição")
+    print("2. Subtração")
+    print("3. Multiplicação")
+    print("4. Divisão")
+
+    operacao = input("Digite o número da operação: ")
+
+    if operacao == '1':
+        resultado = num1 + num2
+        print(f"{num1} + {num2} = {resultado}")
+    elif operacao == '2':
+        resultado = num1 - num2
+        print(f"{num1} - {num2} = {resultado}")
+    elif operacao == '3':
+        resultado = num1 * num2
+        print(f"{num1} * {num2} = {resultado}")
+    elif operacao == '4':
+        if num2 != 0:
+            resultado = num1 / num2
+            print(f"{num1} / {num2} = {resultado}")
+        else:
+            print("Erro: Divisão por zero não é permitida.")
+    else:
+        print("Operação inválida.")
+
+def exibir_opcoes():
+    print("\nOpções Disponíveis:")
+    print("1. Verificador de Idade")
+    print("2. Acesso Login")
+    print("3. Calculadora de IMC")
+    print("4. Sair")
+    print("5. Operações Matemáticas")
+
+def main():
+    while True:
+        exibir_opcoes()
+
+        opcao = input("Escolha uma opção: ")
+        
+        if opcao == '1':
+            verificar_idade()
+        elif opcao == '2':
+            fazer_login()
+        elif opcao == '3':
+            calcular_imc()
+        elif opcao == '4':
+            print("Saindo do aplicativo.")
+            break
+        elif opcao == '5':
+            calcular_operacoes_matematicas()
+        else:
+            print("Opção inválida. Tente novamente.")
+
+        # Pergunta se o usuário deseja voltar ao menu
+        continuar = input("Deseja voltar ao menu? (s/n): ")
+        if continuar.lower() != 's':
+            print("Saindo do aplicativo.")
+            break
+
+if __name__ == "__main__":
+    main()
