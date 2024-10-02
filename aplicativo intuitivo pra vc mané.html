@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Tela de Login</title>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="loginForm" aria-label="Formulário de Login">
+            <div class="input-group">
+                <label for="username">Nome:</label>
+                <input type="text" id="username" name="username" placeholder="Digite seu nome" required aria-required="true">
+            </div>
+            <div class="input-group">
+                <label for="password">Senha:</label>
+                <input type="password" id="password" name="password" placeholder="Digite sua senha" required aria-required="true">
+            </div>
+            <div class="button-group">
+                <button type="submit">Entrar</button>
+                <button type="button" onclick="sair()">Sair</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="menu" style="display: none;" aria-hidden="true">
+        <h2>Menu</h2>
+        <div>
+            <label for="salarioBruto">Salário Bruto:</label>
+            <input type="number" id="salarioBruto" placeholder="Digite o salário bruto" required aria-required="true">
+        </div>
+
+        <div>
+            <label for="percentualINSS">Percentual INSS (%):</label>
+            <input type="number" id="percentualINSS" value="11" required aria-required="true">
+        </div>
+
+        <div>
+            <label for="percentualIR">Percentual Imposto de Renda (%):</label>
+            <input type="number" id="percentualIR" value="15" required aria-required="true">
+        </div>
+
+        <div>
+            <label for="quantidadeFilhos">Quantidade de Filhos:</label>
+            <input type="number" id="quantidadeFilhos" placeholder="Digite a quantidade de filhos" required aria-required="true">
+        </div>
+
+        <div class="button-group">
+            <button onclick="calcularDescontos()">Calcular Salário Líquido</button>
+        </div>
+
+        <h3>Escolha uma opção:</h3>
+        <label>
+            <input type="radio" name="opcao" value="1" checked> Opção 1: Mostrar Desconto INSS
+        </label><br>
+        <label>
+            <input type="radio" name="opcao" value="2"> Opção 2: Mostrar Desconto Imposto de Renda
+        </label><br>
+        <label>
+            <input type="radio" name="opcao" value="3"> Opção 3: Mostrar Salário Líquido
+        </label><br>
+        <label>
+            <input type="radio" name="opcao" value="4"> Opção 4: Calcular Percentual
+        </label><br>
+        
+        <p id="resultado"></p>
+        <button onclick="sair()">Sair</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('loginForm');
+            form.addEventListener('submit', (event) => {
+                event.preventDefault();
+                login();
+            });
+        });
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === 'Morrissey' && password === 'moz1959') {
+                alert('Acesso Permitido');
+                document.getElementById('menu').style.display = 'block';
+                document.getElementById('menu').setAttribute('aria-hidden', 'false');
+                document.getElementById('username').value = '';
+                document.getElementById('password').value = '';
+            } else {
+                alert('Acesso Negado. Tente novamente.');
+            }
+        }
+
+        function calcularDescontos() {
+            const salarioBruto = parseFloat(document.getElementById('salarioBruto').value);
+            const percentualINSS = parseFloat(document.getElementById('percentualINSS').value) / 100;
+            const percentualIR = parseFloat(document.getElementById('percentualIR').value) / 100;
+            const quantidadeFilhos = parseInt(document.getElementById('quantidadeFilhos').value);
+
+            if (isNaN(salarioBruto) || salarioBruto <= 0) {
+                alert('Por favor, insira um salário bruto válido.');
+                return;
+            }
+
+            const inss = salarioBruto * percentualINSS;
+            const ir = salarioBruto * percentualIR;
+            const salarioLiquido = (salarioBruto - (inss + ir)) * 100;
+
+            // Adiciona R$ 100 por filho
+            const adicionalPorFilhos = quantidadeFilhos * 100;
+            const salarioLiquidoFinal = salarioLiquido + adicionalPorFilhos;
+
+            let resultadoTexto = '';
+            const opcaoSelecionada = document.querySelector('input[name="opcao"]:checked').value;
+
+            if (opcaoSelecionada === '1') {
+                resultadoTexto = `Desconto INSS: R$ ${inss.toFixed(2)}`;
+            } else if (opcaoSelecionada === '2') {
+                resultadoTexto = `Desconto Imposto de Renda: R$ ${ir.toFixed(2)}`;
+            } else if (opcaoSelecionada === '3') {
+                resultadoTexto = `Salário Líquido (multiplicado por 100 + R$ 100 por filho): R$ ${salarioLiquidoFinal.toFixed(2)}`;
+            } else if (opcaoSelecionada === '4') {
+                let percentualFinal;
+                if (salarioLiquido === 1000) {
+                    percentualFinal = 0.30;
+                } else {
+                    percentualFinal = 0.40;
+                }
+
+                const resultadoFinal = salarioLiquidoFinal * percentualFinal; // Cálculo final
+                resultadoTexto = `Resultado Final: R$ ${resultadoFinal.toFixed(2)}`;
+            }
+
+            document.getElementById('resultado').innerHTML = resultadoTexto;
+        }
+
+        function sair() {
+            alert('Você saiu.');
+            document.getElementById('menu').style.display = 'none';
+            document.getElementById('menu').setAttribute('aria-hidden', 'true');
+            document.getElementById('loginForm').reset();
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-container, #menu {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            width: 300px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .button-group {
+            margin-top: 10px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-right: 5px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        @media (max-width: 400px) {
+            .login-container, #menu {
+                width: 90%;
+            }
+        }
+    </style>
+</body>
+</html>
