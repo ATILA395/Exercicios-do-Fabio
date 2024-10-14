@@ -1,0 +1,57 @@
+import datetime
+
+# Dicionário para armazenar os usuários e senhas
+usuarios = {
+    "Morrissey": "moz1959",
+    "usuario2": "senha2"
+}
+
+def logon():
+    nome_usuario = input("Digite seu nome de usuário: ")
+    senha_usuario = input("Digite sua senha: ")
+
+    # Verifica se o usuário e a senha estão corretos
+    if nome_usuario in usuarios and usuarios[nome_usuario] == senha_usuario:
+        print("Logon bem-sucedido!")
+        abrir_cadastro()
+    else:
+        print("Nome de usuário ou senha incorretos.")
+
+def abrir_cadastro():
+    print("\n--- Cadastro ---")
+    nome = input("Nome: ")
+    sexo = input("Sexo: ")
+    
+    # Solicita a data
+    data_input = input("Data (dd/mm/aaaa): ")
+    try:
+        # Converte a data para o formato correto
+        data = datetime.datetime.strptime(data_input, "%d/%m/%Y").date()
+    except ValueError:
+        print("Data inválida. O formato correto é dd/mm/aaaa.")
+        return
+
+    profissao = input("Profissão: ")
+    observacao = input("Observação: ")
+
+    # Aqui você pode adicionar lógica para armazenar esses dados
+    # Por exemplo, gravá-los em um arquivo ou em um banco de dados
+
+    # Mostra uma mensagem de sucesso
+    print("\nCadastro realizado com sucesso!")
+    print(f"Nome: {nome}\nSexo: {sexo}\nData: {data}\nProfissão: {profissao}\nObservação: {observacao}")
+
+# Loop principal do sistema
+while True:
+    print("\n--- Menu ---")
+    print("1. Logon")
+    print("2. Sair")
+    escolha = input("Escolha uma opção: ")
+
+    if escolha == '1':
+        logon()
+    elif escolha == '2':
+        print("Saindo do sistema...")
+        break
+    else:
+        print("Opção inválida. Tente novamente.")
